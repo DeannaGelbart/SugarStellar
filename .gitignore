@@ -1,0 +1,13 @@
+*x86*
+*Windows.exe
+*Windows.zip
+*Windows_Data
+*.app
+*.otf
+UnityLockFile
+259285__philip-daniels__launch.*
+rocket-roar-looping.*
+Editor
+Standard Assets
+obj
+*~
