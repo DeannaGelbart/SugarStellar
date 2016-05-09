@@ -43,7 +43,6 @@ public class ShipController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		Debug.Log ("In ship, trigger with " + other.gameObject.name + " tagged as " + other.gameObject.tag);
 		if (other.gameObject.tag == "asteroid" || other.gameObject.tag == "pirate") {
-			Debug.Log ("Calling got hit");
 			SpriteRenderer sr = GetComponent<SpriteRenderer> ();
 			sr.sprite = damagedShip;
 			spaceflightMain.playerGotHit ();
