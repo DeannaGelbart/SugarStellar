@@ -36,13 +36,13 @@ public class InsertCoinMain : MonoBehaviour {
 			PersistentValue xHolder = foundGO.GetComponent<PersistentValue> ();
 			PersistentValue yHolder = foundGO2.GetComponent<PersistentValue> ();
 
-			float radius = 40;
+			float radius = 50;
 
+			Debug.Log ("Radius before adjustment = " + radius);
 			if (difficultyHolder != null) {
 				radius += (difficultyHolder.value - 3) * 5;
-				if (difficultyHolder.value == 5)
-					radius += 5;
 			}
+			Debug.Log ("Radius after adjustment = " + radius);
 
 			Vector2 freighterPos = getPointOnCircle (Random.Range (0, 360f), radius);
 			xHolder.value = (int) Mathf.Round(freighterPos.x); 
