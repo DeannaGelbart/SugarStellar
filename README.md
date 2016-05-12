@@ -28,7 +28,7 @@ Attribution License. https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet
 
 The itch.io builds of the game include this additional art and audio:
 
-Hyperspace font by Pixel Sagas http://www.fontspace.com/pixel-sagas/hyperspace
-Launch by Philip_Daniels https://www.freesound.org/people/Philip_Daniels/sounds/259285/
-Rocket Roar by PlymouthJCliffords https://www.freesound.org/people/PlymouthJCliffords/sounds/164842/
+- Hyperspace font by Pixel Sagas http://www.fontspace.com/pixel-sagas/hyperspace
+- Launch by Philip_Daniels https://www.freesound.org/people/Philip_Daniels/sounds/259285/
+- Rocket Roar by PlymouthJCliffords https://www.freesound.org/people/PlymouthJCliffords/sounds/164842/
 
