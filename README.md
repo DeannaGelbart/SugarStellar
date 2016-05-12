@@ -7,12 +7,11 @@ This repo contains the Unity project for the game:
 
 Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/sugarstellar
 
-*Licensing*
+#Licensing
 
 All the original C# code, art & music in the above-mentioned folders
-are provided under a Creative Commons Attribution license.
-http://creativecommons.org/licenses/by/4.0/ You can attribute code and
-art to SugarStellar, and music to Scott Smigiel.
+are provided to you under a [Creative Commons Attribution license](http://creativecommons.org/licenses/by/4.0/).
+You can attribute code and art to SugarStellar, and music to Scott Smigiel.
 
 A small amount of the C# source code was taken from the
 Unity online forum, and is labeled as such in the code comments.
@@ -20,7 +19,7 @@ So the above license does not apply to it as we are not the authors
 -- it's just 2 pieces of code.  i can put in a library file of its
 own, that would be nice, and put this comment there 
 
-The arcade cabinet photo (before we modified it) is https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg by Chris Rand under a Creative Commons Attribution License. 
+The arcade cabinet photo (before we modified it) is [by Chris Rand under](https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg) a Creative Commons Attribution License. 
 
 The itch.io builds of the game include this additional art and audio:
 
