@@ -19,7 +19,7 @@ So the above license does not apply to it as we are not the authors
 -- it's just 2 pieces of code.  i can put in a library file of its
 own, that would be nice, and put this comment there 
 
-The arcade cabinet photo (before we modified it) is [by Chris Rand under](https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg) a Creative Commons Attribution License. 
+The arcade cabinet photo (before we modified it) is [by Chris Rand](https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg) under a Creative Commons Attribution License. 
 
 The itch.io builds of the game include this additional art and audio:
 
