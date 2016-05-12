@@ -1,4 +1,4 @@
-Let's pretend there was a game called SugarStellar, "a forgotten arcade romcom from 1981" about delivering sweets in space. This short game mixes romance with gameplay and visuals inspired by the bygone era of vector arcade games.
+Let's pretend there was a game called SugarStellar, "a forgotten arcade romcom from 1981" about delivering sweets in space. This short game has gameplay and visuals inspired by the bygone era of vector arcade games.
 
 This repo contains the Unity project for the game SugarStellar.
 
