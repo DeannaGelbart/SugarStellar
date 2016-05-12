@@ -2,7 +2,7 @@ Let's pretend there was a game called SugarStellar, "a forgotten arcade romance 
 
 This repo contains the Unity project for the game:
 - C# source code is in the Assets/Scripts folder
-- Art is in the Assets/Art and Materials folder
+- Art is in the "Assets/Art and Materials" folder
 - Music is in the Assets/Audio folder.
 
 Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/sugarstellar
