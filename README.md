@@ -1,13 +1,13 @@
-# SugarStellarUnity
+Let's pretend there was a game called SugarStellar, "a forgotten arcade romcom from 1981" about delivering sweets in space. This short game mixes romance with gameplay and visuals inspired by the bygone era of vector arcade games.
 
-This is the Unity project for the game SugarStellar.
-
-Ready-to-play builds of the game can be found here:
-https://sugarstellar.itch.io/sugarstellar
+This repo contains the Unity project for the game SugarStellar.
 
 C# source code is in the Assets/Scripts folder.
 Art is in the Assets/Art and Materials folder.
 Music is in the Assets/Audio folder.
+
+Ready-to-play builds of the game can be found here:
+https://sugarstellar.itch.io/sugarstellar
 
 *Licensing*
 
@@ -20,11 +20,9 @@ A small amount of the C# source code was taken from the
 Unity online forum, and is labeled as such in the code comments.
 So the above license does not apply to it as we are not the authors
 -- it's just 2 pieces of code.  i can put in a library file of its
-own, that would be nice 
+own, that would be nice, and put this comment there 
 
-The arcade cabinet photo (before we modified it)
-is by Chris Rand under a Creative Commons
-Attribution License. https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg
+The arcade cabinet photo (before we modified it) is https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg by Chris Rand under a Creative Commons Attribution License. 
 
 The itch.io builds of the game include this additional art and audio:
 
