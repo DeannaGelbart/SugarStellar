@@ -9,8 +9,8 @@ Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/su
 
 #Licensing
 
-All the original C# code, art & music in the above-mentioned folders
-are provided to you under a [Creative Commons Attribution license](http://creativecommons.org/licenses/by/4.0/).
+All the original C# code, art & music created for this game and found in the above-mentioned folders
+is provided to you under a [Creative Commons Attribution license](http://creativecommons.org/licenses/by/4.0/).
 You can attribute code and art to SugarStellar, and music to Scott Smigiel.
 
 A small amount of the C# source code was taken from the
