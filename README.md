@@ -13,7 +13,7 @@ All the original C# code, art & music created for this game is found under the A
 and is provided to you under a [Creative Commons Attribution license](http://creativecommons.org/licenses/by/4.0/).
 You can attribute code and art to SugarStellar, and music to Scott Smigiel. We have also provided
 Unity's generated project files for your convenience. From our point of view you are free to use
-the generated project files however you choose as long as you respect Unity's license terms.
+the generated project files however you choose, as long as you respect Unity's license terms.
 
 The arcade cabinet photo (before we modified it) is [by Chris Rand](https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg) under a Creative Commons Attribution License. 
 
