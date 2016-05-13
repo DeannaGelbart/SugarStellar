@@ -29,7 +29,7 @@ public class PirateController : MonoBehaviour {
 			chaseStarted = true;
 		} else {
 			// Hover up and down.
-			// Sine motion taken from http://forum.unity3d.com/threads/sin-movement-on-y-axis.10357/
+			// Sine motion formula from http://forum.unity3d.com/threads/sin-movement-on-y-axis.10357/
 			float frequency = 0.3f;
 			transform.position += 0.3f * transform.up * (Mathf.Sin (2 * Mathf.PI * frequency * Time.time) - 
 				Mathf.Sin (2 * Mathf.PI * frequency * (Time.time - Time.deltaTime)));

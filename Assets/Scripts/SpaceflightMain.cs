@@ -85,7 +85,7 @@ public class SpaceflightMain : MonoBehaviour
 			Transform t = pirates [i].transform;
 			t.position = freighter.transform.position;			
 			float angle = (360f / pirates.Length) * i;
-			Vector2 offset = getPointOnCircle (angle, 6.9f);
+			Vector2 offset = MathUtilities.getPointOnCircle (angle, 6.9f);
 			t.position = new Vector3 (t.position.x + offset.x, 
 				t.position.y + offset.y, t.position.z);
 		}
@@ -127,26 +127,6 @@ public class SpaceflightMain : MonoBehaviour
 		}
 	}
 		
-	// TODO: put this in a library so it's not duplicated in 2 files.
-	// From http://answers.unity3d.com/questions/33193/randomonunitcircle-.html
-	private Vector2 getPointOnCircle (float angleDegrees, float radius)
-	{
-		float _x = 0;
-		float _y = 0;
-		float angleRadians = 0;
-		Vector2 _returnVector;
-		// convert degrees to radians
-		angleRadians = angleDegrees * Mathf.PI / 180.0f;
-		// get the 2D dimensional coordinates
-		_x = radius * Mathf.Cos (angleRadians);
-		_y = radius * Mathf.Sin (angleRadians);
-		// derive the 2D vector
-		_returnVector = new Vector2 (_x, _y);
-		// return the vector info
-		return _returnVector;
-	}
-
-
 	private void setLives (int lives)
 	{
 		if (livesHolder != null)

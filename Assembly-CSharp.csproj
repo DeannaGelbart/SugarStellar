@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\CameraTracking.cs" />
      <Compile Include="Assets\Scripts\InsertCoinMain.cs" />
+     <Compile Include="Assets\Scripts\MathUtilities.cs" />
      <Compile Include="Assets\Scripts\PersistentValue.cs" />
      <Compile Include="Assets\Scripts\PirateController.cs" />
      <Compile Include="Assets\Scripts\ShipController.cs" />

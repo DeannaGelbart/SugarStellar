@@ -49,7 +49,7 @@ public class InsertCoinMain : MonoBehaviour
 			}
 			Debug.Log ("Radius after adjustment = " + radius);
 
-			Vector2 freighterPos = getPointOnCircle (Random.Range (0, 360f), radius);
+			Vector2 freighterPos = MathUtilities.getPointOnCircle (Random.Range (0, 360f), radius);
 			xHolder.value = (int)Mathf.Round (freighterPos.x); 
 			yHolder.value = (int)Mathf.Round (freighterPos.y);
 
@@ -74,22 +74,4 @@ public class InsertCoinMain : MonoBehaviour
 		}
 	}
 
-	// TODO: put this in a library so it's not duplicated in 2 files.
-	// From http://answers.unity3d.com/questions/33193/randomonunitcircle-.html
-	private Vector2 getPointOnCircle (float angleDegrees, float radius)
-	{
-		float _x = 0;
-		float _y = 0;
-		float angleRadians = 0;
-		Vector2 _returnVector;
-		// convert degrees to radians
-		angleRadians = angleDegrees * Mathf.PI / 180.0f;
-		// get the 2D dimensional coordinates
-		_x = radius * Mathf.Cos (angleRadians);
-		_y = radius * Mathf.Sin (angleRadians);
-		// derive the 2D vector
-		_returnVector = new Vector2 (_x, _y);
-		// return the vector info
-		return _returnVector;
-	}
 }
