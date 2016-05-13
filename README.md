@@ -1,9 +1,9 @@
 Let's pretend there was a game called SugarStellar, "a forgotten arcade romance from 1981" about delivering sweets in space. This short game has gameplay and visuals inspired by the [bygone era of vector arcade games](http://www.museumofplay.org/blog/chegheads/2011/08/gone-but-not-forgotten-vector-games/).
 
 This repo contains the Unity project for the game:
-- C# source code is in the Assets/Scripts folder
-- Art is in the Assets/Art folder
-- Music is in the Assets/Audio folder.
+- C# source code is in Assets/Scripts 
+- Art is in Assets/Art
+- Music is in Assets/Audio
 
 Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/sugarstellar
 
