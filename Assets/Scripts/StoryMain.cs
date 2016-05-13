@@ -1,25 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class StoryMain : MonoBehaviour {
+/* This class has the main logic for the story scenes. */
+public class StoryMain : MonoBehaviour
+{
 
+
+	/* Story scenes are defined by these arrays which each have one
+	   entry for each page of the story:
+		- dialogue[] has the dialogue for the current page of story
+ 		- art[]  has the art
+		- audioClips[] has the music or any other audio
+	*/
 	public GameObject[] dialogue;
-	int dialogueIndex = 0; 
-	int dialogueCount = 0;
 	public GameObject[] art;
-
 	public AudioClip[] audioClips;
-	public AudioSource audioSource;
 
 	public string nameOfNextScene;
+	public AudioSource audioSource;
 
-	// Use this for initialization
-	void Start () {
+	private int pageCount = 0;
+	private int pageIndex = 0;
+
+	void Start ()
+	{
 		for (int i = 0; i < dialogue.Length; i++) {
 			if (dialogue [i] != null)
-				dialogueCount++;
+				pageCount++;
 		}
 
 		if (audioClips.Length > 0 && audioClips [0] != null) {
@@ -27,29 +36,28 @@ public class StoryMain : MonoBehaviour {
 			audioSource.Play ();
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update ()
+	{
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			if (dialogueIndex == (dialogueCount-1)) {				
-				SceneManager.LoadScene(nameOfNextScene); 
-			}
-			else if (dialogueIndex < dialogueCount - 1) {
+			if (pageIndex == (pageCount - 1)) {				
+				SceneManager.LoadScene (nameOfNextScene); 
+			} else if (pageIndex < pageCount - 1) {
 				// Hide the last panel behind the camera.
-				hide(dialogue[dialogueIndex]);
-				if (art[dialogueIndex] != null) {
-					hide(art[dialogueIndex]);
+				hide (dialogue [pageIndex]);
+				if (art [pageIndex] != null) {
+					hide (art [pageIndex]);
 				}
 										
 				// Bring the next panel in front of the camera.
-				dialogueIndex++;
-				show(dialogue[dialogueIndex]);
-				if (art[dialogueIndex] != null) {
-					show(art[dialogueIndex]);
+				pageIndex++;
+				show (dialogue [pageIndex]);
+				if (art [pageIndex] != null) {
+					show (art [pageIndex]);
 				}
 
-				if (dialogueIndex < audioClips.Length && audioClips [dialogueIndex] != null) {
-					audioSource.clip = audioClips [dialogueIndex];
+				if (pageIndex < audioClips.Length && audioClips [pageIndex] != null) {
+					audioSource.clip = audioClips [pageIndex];
 					audioSource.Play ();
 				}
 			}
@@ -57,13 +65,15 @@ public class StoryMain : MonoBehaviour {
 		
 	}
 
-	// Hide behind the camera 
-	private void hide(GameObject o) {
+	// Hide behind the camera
+	private void hide (GameObject o)
+	{
 		o.transform.position = new Vector3 (o.transform.position.x, o.transform.position.y, -10.0f);
 	}
 
 	// Bring in front of the camera
-	private void show(GameObject o) {
+	private void show (GameObject o)
+	{
 		o.transform.position = new Vector3 (o.transform.position.x, o.transform.position.y, 0.0f);
 	}
 }

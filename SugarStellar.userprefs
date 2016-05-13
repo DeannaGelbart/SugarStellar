@@ -1,13 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/InsertCoinMain.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SpaceflightMain.cs">
     <Files>
-      <File FileName="Assets/Scripts/InsertCoinMain.cs" Line="45" Column="28" />
+      <File FileName="Assets/Scripts/InsertCoinMain.cs" Line="77" Column="15" />
       <File FileName="Assets/Scripts/CameraTracking.cs" Line="23" Column="2" />
       <File FileName="Assets/Scripts/PersistentValue.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/PirateController.cs" Line="16" Column="26" />
-      <File FileName="Assets/Scripts/ShipController.cs" Line="46" Column="1" />
-      <File FileName="Assets/Scripts/SpaceflightMain.cs" Line="68" Column="12" />
+      <File FileName="Assets/Scripts/ShipController.cs" Line="3" Column="1" />
+      <File FileName="Assets/Scripts/SpaceflightMain.cs" Line="244" Column="2" />
+      <File FileName="Assets/Scripts/StoryMain.cs" Line="22" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

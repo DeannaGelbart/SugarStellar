@@ -3,8 +3,13 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 
-public class SpaceflightMain : MonoBehaviour {
+/* Main logic for the gameplay scenes where the player is flying around. */
+public class SpaceflightMain : MonoBehaviour
+{
 
+	public string nameOfNextScene;
+
+	/* Visible objects in the scene. */
 	public GameObject[] prototypeAsteroids;
 	public int numberOfAsteroidsBeforeDifficultyModifier;
 	public GameObject prototypeStar;
@@ -14,21 +19,25 @@ public class SpaceflightMain : MonoBehaviour {
 	public GameObject freighter;
 	public GameObject startingPoint;
 	public GameObject destination;
-
 	public GameObject[] pirates;
-
 	public TextMesh headsUpDisplay;
-	public string nameOfNextScene;
-	public AudioSource explosionNoise;
+
+	/* When there are pirates in the scene, the music will
+	 change once we escape them so we need to crossfade it. */
 	public AudioSource endingMusic;
 	public float musicFadeDistance = 15f;
 	public AudioMixerSnapshot startingMixerSnapshot;
 	public AudioMixerSnapshot endingMixerSnapshot;
 
+	/* The walls prevent the asteroids from drifting out too far. */
 	public GameObject leftWall;
 	public GameObject rightWall;
 	public GameObject topWall;
 	public GameObject bottomWall;
+	private float maxX;
+	private float minX;
+	private float maxY;
+	private float minY;
 
 	private bool farEnoughAwayFromStartingPoint = false;
 	private bool reachedStoppingPoint = false;
@@ -36,26 +45,24 @@ public class SpaceflightMain : MonoBehaviour {
 	private int difficulty = 3;
 	private PersistentValue livesHolder;
 
-	private float maxX;
-	private float minX;
-	private float maxY;
-	private float minY;
-
-	void Start () {
-		GameObject foundGO = GameObject.Find("Difficulty Persistence");
+	void Start ()
+	{
+		GameObject foundGO = GameObject.Find ("Difficulty Persistence");
 		if (foundGO) {			
 			difficulty = foundGO.GetComponent<PersistentValue> ().value;
 		}	
 		Debug.Log ("Difficulty: " + difficulty);
 
-		foundGO = GameObject.Find("Lives Persistence");
+		foundGO = GameObject.Find ("Lives Persistence");
 		if (foundGO) {
 			livesHolder = foundGO.GetComponent<PersistentValue> ();
-			Debug.Log ("Loaded lives: " + getLives());
+			Debug.Log ("Loaded lives: " + getLives ());
 		} 	
 			
-		foundGO = GameObject.Find("Freighter X Persistence");
-		GameObject foundGO2 = GameObject.Find("Freighter Y Persistence");
+		/* Bonnie's freighter's location is randomized before gameplay starts so that
+		 it will be the same in both spaceflight scenes.  */
+		foundGO = GameObject.Find ("Freighter X Persistence");
+		GameObject foundGO2 = GameObject.Find ("Freighter Y Persistence");
 		if (foundGO && foundGO2) {
 			int x = foundGO.GetComponent<PersistentValue> ().value;
 			int y = foundGO2.GetComponent<PersistentValue> ().value;
@@ -73,7 +80,7 @@ public class SpaceflightMain : MonoBehaviour {
 			aliceShip.transform.position = bakery.transform.position;
 		}
 
-		// Pirates surround the freighter.
+		// Pirates surround the freighter in the second spaceflight scene.
 		for (int i = 0; pirates != null && i < pirates.Length && pirates [i] != null; i++) {
 			Transform t = pirates [i].transform;
 			t.position = freighter.transform.position;			
@@ -92,23 +99,25 @@ public class SpaceflightMain : MonoBehaviour {
 			startingMixerSnapshot.TransitionTo (0.1f);
 		}			
 	}
-	
-	void FixedUpdate () {
+
+	void FixedUpdate ()
+	{
 		rotateBakery ();
 	}
 
-	void Update() {
+	void Update ()
+	{
 		distanceFromStartingPointLogic ();
 		distanceToDestinationLogic (); 
 	}
 
-	public void playerGotHit() {
-		explosionNoise.Play ();
+	public void playerGotHit ()
+	{
 		freeze ();
 		reachedStoppingPoint = true;
 
-		setLives(getLives() - 1);
-		if (getLives() <= 0) {
+		setLives (getLives () - 1);
+		if (getLives () <= 0) {
 			nameOfNextScene = "Beginning";
 			headsUpDisplay.text = "That's the way the\ncookie crumbles!\nGame over";
 			setLives (3);
@@ -118,8 +127,10 @@ public class SpaceflightMain : MonoBehaviour {
 		}
 	}
 		
+	// TODO: put this in a library so it's not duplicated in 2 files.
 	// From http://answers.unity3d.com/questions/33193/randomonunitcircle-.html
-	private Vector2 getPointOnCircle(float angleDegrees, float radius) {
+	private Vector2 getPointOnCircle (float angleDegrees, float radius)
+	{
 		float _x = 0;
 		float _y = 0;
 		float angleRadians = 0;
@@ -127,48 +138,53 @@ public class SpaceflightMain : MonoBehaviour {
 		// convert degrees to radians
 		angleRadians = angleDegrees * Mathf.PI / 180.0f;
 		// get the 2D dimensional coordinates
-		_x = radius * Mathf.Cos(angleRadians);
-		_y = radius * Mathf.Sin(angleRadians);
+		_x = radius * Mathf.Cos (angleRadians);
+		_y = radius * Mathf.Sin (angleRadians);
 		// derive the 2D vector
-		_returnVector = new Vector2(_x, _y);
+		_returnVector = new Vector2 (_x, _y);
 		// return the vector info
 		return _returnVector;
 	}
 
 
-	private void setLives(int lives) {
+	private void setLives (int lives)
+	{
 		if (livesHolder != null)
 			livesHolder.value = lives;
 	}
 
-	private int getLives() {
+	private int getLives ()
+	{
 		if (livesHolder != null)
 			return livesHolder.value;
 		else
 			return 3;
 	}
 
-	private void freeze() {
+	private void freeze ()
+	{
 		aliceShip.GetComponent<ShipController> ().engineNoise.mute = true;
 		Time.timeScale = 0; // Pause all motion and stop FixedUpdates.
 	}
 
-	private void unfreeze() {
+	private void unfreeze ()
+	{
 		Time.timeScale = 1; // Restore FixedUpdates.
 	}
-		
-	private void distanceToDestinationLogic() {
+
+	private void distanceToDestinationLogic ()
+	{
 			
 		if (!reachedStoppingPoint) {
 			float distance = Vector3.Distance (aliceShip.transform.position, destination.transform.position);
 
-			if (distance < 3) {
+			if (distance < 4) {
 				reachedStoppingPoint = true;
 				freeze ();
 				headsUpDisplay.text = "You made it!\n" + "In " + Time.timeSinceLevelLoad.ToString ("F0") + " seconds and\n" +
-					aliceShip.GetComponent<ShipController> ().fuelUsed.ToString ("F0") + " cups of sugar.";
+				aliceShip.GetComponent<ShipController> ().fuelUsed.ToString ("F0") + " cups of sugar.";
 			} else {
-				headsUpDisplay.text = "Lives:" + getLives() + "  Distance:" + distance.ToString ("F1"); 
+				headsUpDisplay.text = "Lives:" + getLives () + "  Distance:" + distance.ToString ("F1"); 
 			}
 		}
 
@@ -181,7 +197,7 @@ public class SpaceflightMain : MonoBehaviour {
 		}
 	}
 
-	private void distanceFromStartingPointLogic () 
+	private void distanceFromStartingPointLogic ()
 	{
 		if (!farEnoughAwayFromStartingPoint) {
 			float distance = Vector3.Distance (aliceShip.transform.position, startingPoint.transform.position);
@@ -194,14 +210,16 @@ public class SpaceflightMain : MonoBehaviour {
 	}
 
 
-	private void rotateBakery() {
+	private void rotateBakery ()
+	{
 		// Bakery spins slowly
 		if (bakery != null)
 			bakery.transform.Rotate (0, 0, -4f * Time.deltaTime);		
 	}
 
 
-	private void initializeStars() {
+	private void initializeStars ()
+	{
 		GameObject[] stars = new GameObject[numberOfStars];
 
 		for (int i = 0; i < stars.Length; i++) {
@@ -218,13 +236,14 @@ public class SpaceflightMain : MonoBehaviour {
 
 				float d1 = Vector3.Distance (bakery.transform.position, t.position);
 				float d2 = Vector3.Distance (freighter.transform.position, t.position);
-				if (d1 > minDistanceFromLandmarks && d2 > minDistanceFromLandmarks) 
+				if (d1 > minDistanceFromLandmarks && d2 > minDistanceFromLandmarks)
 					good = true;
 			} while (!good);
 		}
 	}
-		
-	private void initializeAsteroids() {		
+
+	private void initializeAsteroids ()
+	{		
 
 		float modifier = 1.0f;
 
@@ -245,23 +264,21 @@ public class SpaceflightMain : MonoBehaviour {
 		for (int i = 0; i < asteroids.Length; i++) {
 			GameObject prototypeAsteroid = prototypeAsteroids [Random.Range (0, prototypeAsteroids.Length)];
 			asteroids [i] = Instantiate (prototypeAsteroid);
-			Transform t = asteroids[i].transform;
+			Transform t = asteroids [i].transform;
 			Rigidbody2D r = t.GetComponent<Rigidbody2D> ();
 
-			t.localEulerAngles = new Vector3 (0, 0, Random.Range(0,360f));
+			t.localEulerAngles = new Vector3 (0, 0, Random.Range (0, 360f));
 
 			float speed = Random.Range (0.2f, 1f) * difficulty / 2.7f;
-			Vector2 movementDirection = Quaternion.Euler(0, 0, Random.Range(0,360f)) * new Vector2(0,1f);
+			Vector2 movementDirection = Quaternion.Euler (0, 0, Random.Range (0, 360f)) * new Vector2 (0, 1f);
 			r.velocity = movementDirection * speed;		
 
 			bool good = false;
 			do {
 				t.position = new Vector3 (Random.Range (minX, maxX), Random.Range (minY, maxY), 0);
 				float d = Vector3.Distance (aliceShip.transform.position, t.position);
-				if (d > minDistanceFromShip) 
+				if (d > minDistanceFromShip)
 					good = true;
-				//else 
-				//	Debug.Log ("rejected asteroid position: distance from ship = " + d);						
 			} while (!good);
 		}
 	}
