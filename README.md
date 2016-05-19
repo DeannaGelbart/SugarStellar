@@ -11,7 +11,7 @@ Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/su
 
 All the original C# code, art & music created for this game is found under the Assets folder
 and is provided to you under a [Creative Commons Attribution License](http://creativecommons.org/licenses/by/4.0/).
-You can attribute code and art to SugarStellar, and music to Scott Smigiel. We have also provided
+You can attribute code to David Gelbart, music to Scott Smigiel, and  art to SugarStellar. We have also provided
 Unity's generated project files for your convenience. From our point of view you are free to use
 the generated project files however you choose, as long as you respect Unity's license terms.
 
