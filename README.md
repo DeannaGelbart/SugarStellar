@@ -2,6 +2,8 @@ Let's pretend there was a game called SugarStellar, "a forgotten arcade romance 
 
 Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/sugarstellar
 
+You can also watch Jupiter Hadley play it at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840
+
 This repo contains the Unity project for the game:
 - C# source code is in Assets/Scripts 
 - Art is in Assets/Art
