@@ -6,7 +6,7 @@ This short game has gameplay and visuals inspired by the [bygone era of vector a
 
 Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/sugarstellar
 
-You can also watch Jupiter Hadley play it at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840
+You can also watch some gameplay at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840
 
 This repo contains the Unity project for the game:
 - C# source code is in Assets/Scripts 
