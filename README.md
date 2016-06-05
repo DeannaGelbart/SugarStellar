@@ -1,4 +1,8 @@
-Let's pretend there was a game called SugarStellar, "a forgotten arcade romance from 1981" about delivering sweets in space. This short game has gameplay and visuals inspired by the [bygone era of vector arcade games](http://www.museumofplay.org/blog/chegheads/2011/08/gone-but-not-forgotten-vector-games/), especially Asteroids.
+Presenting the first ever emulator for SugarStellar, an action / romance arcade game from 1981!
+
+OK, I'll level with you: it's not an emulator and the game did not actually exist in 1981.
+
+This short game has gameplay and visuals inspired by the [bygone era of vector arcade games](http://www.museumofplay.org/blog/chegheads/2011/08/gone-but-not-forgotten-vector-games/), especially Asteroids.
 
 Ready-to-play builds of the game can be found at https://sugarstellar.itch.io/sugarstellar
 
