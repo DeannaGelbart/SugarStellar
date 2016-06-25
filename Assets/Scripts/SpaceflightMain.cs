@@ -25,7 +25,6 @@ public class SpaceflightMain : MonoBehaviour
 	/* When there are pirates in the scene, the music will
 	 change once we escape them so we need to crossfade it. */
 	public AudioSource endingMusic;
-	public float musicFadeDistance = 15f;
 	public AudioMixerSnapshot startingMixerSnapshot;
 	public AudioMixerSnapshot endingMixerSnapshot;
 
@@ -39,7 +38,7 @@ public class SpaceflightMain : MonoBehaviour
 	private float maxY;
 	private float minY;
 
-	private bool farEnoughAwayFromStartingPoint = false;
+	private bool reachedMusicTransitionPoint = false;
 	private bool reachedStoppingPoint = false;
 
 	private int difficulty = 3;
@@ -107,7 +106,6 @@ public class SpaceflightMain : MonoBehaviour
 
 	void Update ()
 	{
-		distanceFromStartingPointLogic ();
 		distanceToDestinationLogic (); 
 	}
 
@@ -154,10 +152,17 @@ public class SpaceflightMain : MonoBehaviour
 
 	private void distanceToDestinationLogic ()
 	{
+		float distance = Vector3.Distance (aliceShip.transform.position, destination.transform.position);
+
+		if (!reachedMusicTransitionPoint) {
+			if (distance <= 15f && endingMusic != null) {
+				reachedMusicTransitionPoint = true;
+				endingMusic.Play ();
+				endingMixerSnapshot.TransitionTo (0.2f);
+			}
+		}
 			
 		if (!reachedStoppingPoint) {
-			float distance = Vector3.Distance (aliceShip.transform.position, destination.transform.position);
-
 			if (distance < 4) {
 				reachedStoppingPoint = true;
 				freeze ();
@@ -168,7 +173,7 @@ public class SpaceflightMain : MonoBehaviour
 			}
 		}
 
-		// Move to next scene
+		// Move to next scene once destination reached.
 		if (reachedStoppingPoint && Input.GetKeyDown (KeyCode.Space)) {
 			unfreeze ();
 			if (nameOfNextScene == "End")
@@ -176,19 +181,7 @@ public class SpaceflightMain : MonoBehaviour
 			SceneManager.LoadScene (nameOfNextScene); 
 		}
 	}
-
-	private void distanceFromStartingPointLogic ()
-	{
-		if (!farEnoughAwayFromStartingPoint) {
-			float distance = Vector3.Distance (aliceShip.transform.position, startingPoint.transform.position);
-			if (distance > musicFadeDistance && endingMusic != null) {
-				farEnoughAwayFromStartingPoint = true;
-				endingMusic.Play ();
-				endingMixerSnapshot.TransitionTo (0.2f);
-			}
-		}
-	}
-
+		
 
 	private void rotateBakery ()
 	{
