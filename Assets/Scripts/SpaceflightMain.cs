@@ -118,7 +118,7 @@ public class SpaceflightMain : MonoBehaviour
 		if (getLives () <= 0) {
 			nameOfNextScene = "Beginning";
 			headsUpDisplay.text = "That's the way the\ncookie crumbles!\nGame over";
-			setLives (3);
+			setLives (5);
 		} else {
 			headsUpDisplay.text = "No use crying over\nspilled milk 'n' cookies!\nTime to try again!";
 			nameOfNextScene = SceneManager.GetActiveScene ().name;
