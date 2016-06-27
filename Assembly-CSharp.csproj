@@ -49,7 +49,6 @@
      <Compile Include="Assets\Scripts\InsertCoinMain.cs" />
      <Compile Include="Assets\Scripts\MathUtilities.cs" />
      <Compile Include="Assets\Scripts\PersistentValue.cs" />
-     <Compile Include="Assets\Scripts\PirateController.cs" />
      <Compile Include="Assets\Scripts\ShipController.cs" />
      <Compile Include="Assets\Scripts\SpaceflightMain.cs" />
      <Compile Include="Assets\Scripts\StoryMain.cs" />

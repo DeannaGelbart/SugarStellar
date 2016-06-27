@@ -84,7 +84,7 @@ public class SpaceflightMain : MonoBehaviour
 			Transform t = pirates [i].transform;
 			t.position = freighter.transform.position;			
 			float angle = (360f / pirates.Length) * i;
-			Vector2 offset = MathUtilities.getPointOnCircle (angle, 6.9f);
+			Vector2 offset = MathUtilities.getPointOnCircle (angle, Random.Range(6.5f, 10f));
 			t.position = new Vector3 (t.position.x + offset.x, 
 				t.position.y + offset.y, t.position.z);
 		}
@@ -101,7 +101,8 @@ public class SpaceflightMain : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-		rotateBakery ();
+		rotateBakery (); 
+		pirateMovements ();
 	}
 
 	void Update ()
@@ -255,4 +256,87 @@ public class SpaceflightMain : MonoBehaviour
 			} while (!good);
 		}
 	}
+
+	// The pirates chase Alice. Their movement code, below, is closely based on the 
+	// Boids flocking pseudocode at http://www.kfish.org/boids/pseudocode.html
+	// and the Unity Boids implementation at http://wiki.unity3d.com/index.php?title=Flocking
+	// Basically, any bugs are my fault but all good ideas came from those two links. 
+	private void pirateMovements() 
+	{
+		float maxSpeed = 2f; // TODO can scale by difficulty level
+
+		// No need to adjust velocity every frame. 
+		if(Time.frameCount % 10 != 0) return;
+
+		foreach (GameObject p in pirates)
+		{
+			Rigidbody2D r = p.transform.GetComponent<Rigidbody2D> ();
+
+			Vector2 v = new Vector2 ();
+
+			v += 0.5f*boidsAttractionToFlockCenter (p);
+			v += 5.8f * boidsDistancingFromOtherBoids(p);
+			v += 0.6f * boidsVelocityMatchingWithOtherBoids (p);
+
+			Vector2 towardsAlice = (Vector2)aliceShip.transform.position - (Vector2)p.transform.position;
+
+			v += 2.2f * towardsAlice;
+
+			Vector2 randomization = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+			v += 0.7f * randomization;
+
+			r.velocity = r.velocity + v * Time.deltaTime;
+			float speed = r.velocity.magnitude;
+			if (speed > maxSpeed) {
+				r.velocity = maxSpeed * r.velocity.normalized;
+			}
+		}		
+	}
+
+	private Vector2 boidsAttractionToFlockCenter(GameObject thisPirate)
+	{
+		Vector2 flockCenter = new Vector2();
+		foreach (GameObject otherPirate in pirates) {
+			if (thisPirate != otherPirate) {
+				flockCenter += (Vector2) otherPirate.transform.position;
+			}
+		}
+		flockCenter /= (pirates.Length-1);
+
+		return flockCenter - (Vector2) thisPirate.transform.position;
+	}
+
+	private Vector2 boidsDistancingFromOtherBoids(GameObject thisPirate)
+	{
+		Vector2 c = new Vector2();
+
+		foreach (GameObject otherPirate in pirates) {
+			if (thisPirate != otherPirate) {
+				Vector2 otherPiratePos = (Vector2) otherPirate.transform.position;
+				Vector2 thisPiratePos = (Vector2)thisPirate.transform.position;
+				if (Vector2.Distance(thisPiratePos, otherPiratePos) < 3) {
+					Vector2 moveAway = thisPiratePos - otherPiratePos;
+					c = c + moveAway;
+				}					
+			}
+		}
+
+		return c;
+	}
+
+	private Vector2 boidsVelocityMatchingWithOtherBoids(GameObject thisPirate)
+	{
+		Vector2 flockVelocity = new Vector2();
+
+		foreach (GameObject otherPirate in pirates) {
+			if (thisPirate != otherPirate) {
+				flockVelocity += otherPirate.GetComponent<Rigidbody2D>().velocity; 
+			}
+		}
+
+		flockVelocity /= (pirates.Length-1);
+
+		return flockVelocity - thisPirate.GetComponent<Rigidbody2D>().velocity;
+	}
+
 }
