@@ -36,7 +36,7 @@ public class ShipController : MonoBehaviour
 			engineNoise.mute = false;
 			if (sr.sprite != damagedShip)
 				sr.sprite = shipWithThrust;
-			rb.AddRelativeForce (new Vector2 (0f, 3.5f));
+			rb.AddRelativeForce (new Vector2 (0f, 3.1f));
 			fuelUsed += Time.deltaTime * 0.8;
 		} else {
 			engineNoise.mute = true;
