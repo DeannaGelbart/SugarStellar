@@ -167,8 +167,7 @@ public class SpaceflightMain : MonoBehaviour
 			if (distance < 4) {
 				reachedStoppingPoint = true;
 				freeze ();
-				headsUpDisplay.text = "You made it!\n" + "In " + Time.timeSinceLevelLoad.ToString ("F0") + " seconds and\n" +
-				aliceShip.GetComponent<ShipController> ().fuelUsed.ToString ("F0") + " cups of sugar.";
+				headsUpDisplay.text = "You made it!\n" + "In " + Time.timeSinceLevelLoad.ToString ("F0") + " seconds";
 			} else {
 				headsUpDisplay.text = "Lives:" + getLives () + "  Distance:" + distance.ToString ("F1"); 
 			}

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Spaceflight.unity
+- path: Assets/Beginning.unity
   isLoaded: 1
   isActive: 1

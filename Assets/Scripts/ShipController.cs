@@ -13,8 +13,6 @@ public class ShipController : MonoBehaviour
 	public Sprite damagedShip;
 	public SpaceflightMain spaceflightMain;
 
-	public double fuelUsed = 0.0;
-
 	void Start ()
 	{
 		engineNoise.mute = true;
@@ -37,7 +35,6 @@ public class ShipController : MonoBehaviour
 			if (sr.sprite != damagedShip)
 				sr.sprite = shipWithThrust;
 			rb.AddRelativeForce (new Vector2 (0f, 3.1f));
-			fuelUsed += Time.deltaTime * 0.8;
 		} else {
 			engineNoise.mute = true;
 			if (sr.sprite != damagedShip)
