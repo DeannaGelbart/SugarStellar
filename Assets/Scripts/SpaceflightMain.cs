@@ -40,8 +40,9 @@ public class SpaceflightMain : MonoBehaviour
 
 	private bool reachedMusicTransitionPoint = false;
 	private bool reachedStoppingPoint = false;
+	private bool piratesWillChase = false;
 
-	private int difficulty = 3;
+	private int difficulty = 2;
 	private PersistentValue livesHolder;
 
 	void Start ()
@@ -107,6 +108,7 @@ public class SpaceflightMain : MonoBehaviour
 
 	void Update ()
 	{
+		distanceFromStartPointLogic ();
 		distanceToDestinationLogic (); 
 	}
 
@@ -151,6 +153,15 @@ public class SpaceflightMain : MonoBehaviour
 		Time.timeScale = 1; // Restore FixedUpdates.
 	}
 
+	private void distanceFromStartPointLogic () 
+	{
+		float distance = Vector3.Distance (aliceShip.transform.position, startingPoint.transform.position);
+
+		// The pirates won't start chasing until alice is a little ways away from the freighter.
+		if (distance > 2f)
+			piratesWillChase = true;
+	}
+
 	private void distanceToDestinationLogic ()
 	{
 		float distance = Vector3.Distance (aliceShip.transform.position, destination.transform.position);
@@ -167,7 +178,7 @@ public class SpaceflightMain : MonoBehaviour
 			if (distance < 4) {
 				reachedStoppingPoint = true;
 				freeze ();
-				headsUpDisplay.text = "You made it!\n" + "In " + Time.timeSinceLevelLoad.ToString ("F0") + " seconds";
+				headsUpDisplay.text = "You made it!\n" + "In " + Time.timeSinceLevelLoad.ToString ("F1") + " seconds";
 			} else {
 				headsUpDisplay.text = "Lives:" + getLives () + "  Distance:" + distance.ToString ("F1"); 
 			}
@@ -262,6 +273,9 @@ public class SpaceflightMain : MonoBehaviour
 	// Basically, any bugs are my fault but all good ideas came from those two links. 
 	private void pirateMovements() 
 	{
+		if (!piratesWillChase)
+			return;
+		
 		float maxSpeed = 2f; // TODO can scale by difficulty level
 
 		// No need to adjust velocity every frame. 
@@ -273,16 +287,17 @@ public class SpaceflightMain : MonoBehaviour
 
 			Vector2 v = new Vector2 ();
 
-			v += 0.5f*boidsAttractionToFlockCenter (p);
-			v += 5.8f * boidsDistancingFromOtherBoids(p);
-			v += 0.6f * boidsVelocityMatchingWithOtherBoids (p);
+			v += 0.3f*boidsAttractionToFlockCenter (p);
+			v += 5.4f * boidsDistancingFromOtherBoids(p);
+			v += 0.4f * boidsVelocityMatchingWithOtherBoids (p);
 
 			Vector2 towardsAlice = (Vector2)aliceShip.transform.position - (Vector2)p.transform.position;
 
-			v += 2.2f * towardsAlice;
+			// This is the part that makes the pirates chase her.
+			v += ((difficulty / 5.5f) + 2.4f) * towardsAlice;				
 
 			Vector2 randomization = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-			v += 0.7f * randomization;
+			v += 0.5f * randomization;
 
 			r.velocity = r.velocity + v * Time.deltaTime;
 			float speed = r.velocity.magnitude;
