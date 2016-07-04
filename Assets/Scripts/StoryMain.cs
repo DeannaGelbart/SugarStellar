@@ -39,6 +39,9 @@ public class StoryMain : MonoBehaviour
 
 	void Update ()
 	{
+		if (Input.GetKey("escape"))
+			Application.Quit();
+		
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			if (pageIndex == (pageCount - 1)) {				
 				SceneManager.LoadScene (nameOfNextScene); 

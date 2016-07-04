@@ -44,6 +44,8 @@ public class SpaceflightMain : MonoBehaviour
 
 	private int difficulty = 2;
 	private PersistentValue livesHolder;
+	private int timeToFinishThisLevel = 0;
+	private PersistentValue timeTakenHolder;
 
 	void Start ()
 	{
@@ -57,6 +59,12 @@ public class SpaceflightMain : MonoBehaviour
 		if (foundGO) {
 			livesHolder = foundGO.GetComponent<PersistentValue> ();
 			Debug.Log ("Loaded lives: " + getLives ());
+		} 	
+
+		foundGO = GameObject.Find ("Time Taken Persistence");
+		if (foundGO) {
+			timeTakenHolder = foundGO.GetComponent<PersistentValue> ();
+			Debug.Log ("Time taken: " + getTimeTaken ());
 		} 	
 			
 		/* Bonnie's freighter's location is randomized before gameplay starts so that
@@ -108,6 +116,9 @@ public class SpaceflightMain : MonoBehaviour
 
 	void Update ()
 	{
+		if (Input.GetKey("escape"))
+			Application.Quit();
+		
 		distanceFromStartPointLogic ();
 		distanceToDestinationLogic (); 
 	}
@@ -140,6 +151,20 @@ public class SpaceflightMain : MonoBehaviour
 			return livesHolder.value;
 		else
 			return 3;
+	}
+
+	private void setTimeTaken (int timeTaken)
+	{
+		if (timeTakenHolder != null)
+			timeTakenHolder.value = timeTaken;
+	}
+
+	private int getTimeTaken ()
+	{
+		if (timeTakenHolder != null)
+			return timeTakenHolder.value;
+		else
+			return 0;
 	}
 
 	private void freeze ()
@@ -178,7 +203,9 @@ public class SpaceflightMain : MonoBehaviour
 			if (distance < 4) {
 				reachedStoppingPoint = true;
 				freeze ();
-				headsUpDisplay.text = "You made it!\n" + "In " + Time.timeSinceLevelLoad.ToString ("F1") + " seconds";
+				timeToFinishThisLevel = (int) Mathf.Round(Time.timeSinceLevelLoad);
+				headsUpDisplay.text = "You made it!\n" + "In " + timeToFinishThisLevel + " seconds";
+
 			} else {
 				headsUpDisplay.text = "Lives:" + getLives () + "  Distance:" + distance.ToString ("F1"); 
 			}
@@ -187,8 +214,13 @@ public class SpaceflightMain : MonoBehaviour
 		// Move to next scene once destination reached.
 		if (reachedStoppingPoint && Input.GetKeyDown (KeyCode.Space)) {
 			unfreeze ();
-			if (nameOfNextScene == "End")
+			if (nameOfNextScene == "End") {
 				setLives (3); // Reset # of lives for next time they play			
+				setTimeTaken (getTimeTaken () + timeToFinishThisLevel);
+				Debug.Log("Time to reach freighter and then return to bakery: " + getTimeTaken());
+			} else {
+				setTimeTaken (timeToFinishThisLevel);
+			}
 			SceneManager.LoadScene (nameOfNextScene); 
 		}
 	}

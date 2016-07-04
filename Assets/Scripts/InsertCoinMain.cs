@@ -20,6 +20,9 @@ public class InsertCoinMain : MonoBehaviour
 
 	void Update ()
 	{
+		if (Input.GetKey("escape"))
+			Application.Quit();
+		
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			randomizeFreighterLocation ();
 			SceneManager.LoadScene ("Beginning Story"); 
