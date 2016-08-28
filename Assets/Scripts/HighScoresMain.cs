@@ -22,7 +22,8 @@ public class HighScoresMain : MonoBehaviour
 			timeTaken = foundGO.GetComponent<PersistentValue> ().value;
 		} 	
 
-		highScoresDisplay.text = "RECORD-SETTING TIMES FOR FASTEST FINISH\n\n";
+		highScoresDisplay.text = "YOUR COMBINED TIME: " + timeTaken + " SECONDS\n\n";
+		highScoresDisplay.text += "RECORD-SETTING TIMES:\n\n";
 
 		for (int d = 1; d <= 5; d++) {
 			highScoresDisplay.text += "DIFFICULTY " + d + ": ";

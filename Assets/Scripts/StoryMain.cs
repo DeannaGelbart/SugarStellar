@@ -16,10 +16,12 @@ public class StoryMain : MonoBehaviour
 	*/
 	public GameObject[] dialogue;
 	public GameObject[] art;
-	public AudioClip[] audioClips;
+	public AudioClip[] musicClips;
+	public AudioClip[] soundFXClips;
 
 	public string nameOfNextScene;
-	public AudioSource audioSource;
+	public AudioSource musicAudioSource;
+	public AudioSource soundFXAudioSource;
 
 	private int pageCount = 0;
 	private int pageIndex = 0;
@@ -31,9 +33,14 @@ public class StoryMain : MonoBehaviour
 				pageCount++;
 		}
 
-		if (audioClips.Length > 0 && audioClips [0] != null) {
-			audioSource.clip = audioClips [0];
-			audioSource.Play ();
+		if (musicClips.Length > 0 && musicClips [0] != null) {
+			musicAudioSource.clip = musicClips [0];
+			musicAudioSource.Play ();
+		}
+
+		if (soundFXClips.Length > 0 && soundFXClips [0] != null) {
+			soundFXAudioSource.clip = soundFXClips [0];
+			soundFXAudioSource.Play ();
 		}
 	}
 
@@ -59,10 +66,16 @@ public class StoryMain : MonoBehaviour
 					show (art [pageIndex]);
 				}
 
-				if (pageIndex < audioClips.Length && audioClips [pageIndex] != null) {
-					audioSource.clip = audioClips [pageIndex];
-					audioSource.Play ();
+				if (pageIndex < musicClips.Length && musicClips [pageIndex] != null) {
+					musicAudioSource.clip = musicClips [pageIndex];
+					musicAudioSource.Play ();
 				}
+
+				if (pageIndex < soundFXClips.Length && soundFXClips [pageIndex] != null) {
+					soundFXAudioSource.clip = soundFXClips [pageIndex];
+					soundFXAudioSource.Play ();
+				}
+
 			}
 		}
 		

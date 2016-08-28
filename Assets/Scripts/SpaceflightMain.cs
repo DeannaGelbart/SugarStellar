@@ -203,7 +203,7 @@ public class SpaceflightMain : MonoBehaviour
 				freeze ();
 				timeToFinishThisLevel = (int) Mathf.Round(Time.timeSinceLevelLoad);
 				headsUpDisplay.text = "You made it!\n" + "In " + timeToFinishThisLevel + " seconds";
-
+				setTimeTaken (getTimeTaken () + timeToFinishThisLevel);
 			} else {
 				headsUpDisplay.text = "Lives:" + getLives () + "  Distance:" + distanceToDestination.ToString ("F1"); 
 				if (piratesStartChase && piratesStopChase)
@@ -216,11 +216,7 @@ public class SpaceflightMain : MonoBehaviour
 			unfreeze ();
 			if (nameOfNextScene == "End") {
 				setLives (3); // Reset # of lives for next time they play			
-				setTimeTaken (getTimeTaken () + timeToFinishThisLevel);
-				Debug.Log("Time to reach freighter and then return to bakery: " + getTimeTaken());
-			} else {
-				setTimeTaken (timeToFinishThisLevel);
-			}
+			} 
 			SceneManager.LoadScene (nameOfNextScene); 
 		}
 	}

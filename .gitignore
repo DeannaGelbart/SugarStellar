@@ -9,7 +9,9 @@ SugarStellar_Data
 *.otf
 UnityLockFile
 259285__philip-daniels__launch.*
-*AudioMicro.wav
+*AudioMicro*
+*zimbot*
+*Sci*Machine*
 rocket-roar-looping.*
 Editor
 Standard Assets

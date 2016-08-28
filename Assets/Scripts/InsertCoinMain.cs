@@ -9,6 +9,7 @@ public class InsertCoinMain : MonoBehaviour
 	public TextMesh difficultyDisplay;
 
 	private PersistentValue difficultyHolder;
+	private PersistentValue timeTakenHolder;
 
 	void Start ()
 	{
@@ -16,6 +17,12 @@ public class InsertCoinMain : MonoBehaviour
 		if (foundGO) {			
 			difficultyHolder = foundGO.GetComponent<PersistentValue> ();
 		}	
+
+		foundGO = GameObject.Find ("Time Taken Persistence");
+		if (foundGO) {
+			timeTakenHolder = foundGO.GetComponent<PersistentValue> ();
+			timeTakenHolder.value = 0;
+		} 	
 	}
 
 	void Update ()
