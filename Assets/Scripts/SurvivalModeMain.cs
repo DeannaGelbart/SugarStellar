@@ -12,6 +12,7 @@ public class SurvivalModeMain : MonoBehaviour
 	public GameObject prototypePirate;
 	public int numberOfAsteroidsBeforeDifficultyModifier;
 	public int numberOfPiratesBeforeDifficultyModifier;
+	public int numberOfPiratesPerFlock;
 	public GameObject prototypeStar;
 	public int numberOfStars;
 	public GameObject aliceShip;
@@ -29,8 +30,9 @@ public class SurvivalModeMain : MonoBehaviour
 	private float minX;
 	private float maxY;
 	private float minY;
+	private int numberOfPirateFlocks;
 
-	private GameObject[] pirates;
+	private GameObject[][] pirateFlocks;
 	private int difficulty = 2;
 	private int timeToFinishThisLevel = 0;
 	private PersistentValue timeTakenHolder;
@@ -184,21 +186,25 @@ public class SurvivalModeMain : MonoBehaviour
 			modifier = 1.4f;
 
 		int numberOfPirates = (int)(numberOfPiratesBeforeDifficultyModifier * modifier);
-		pirates = new GameObject[numberOfPirates];	
+		numberOfPirateFlocks = numberOfPirates / numberOfPiratesPerFlock;
 
+		pirateFlocks = new GameObject[numberOfPirateFlocks][];
+		for (int f = 0; f < numberOfPirateFlocks; f++) {			
+			GameObject[] flock = new GameObject[numberOfPiratesPerFlock];
+			pirateFlocks [f] = flock;
 
-		// ** Might be better to randomly distribute the pod centers. 
-
-		// Spread the pirates in a ring around alice
-		for (int i = 0; i < pirates.Length; i++) {
-			pirates [i] = Instantiate (prototypePirate);
-			Transform t = pirates [i].transform;
-			t.position = aliceShip.transform.position;			
-
-			float angle = (360f / pirates.Length) * i;
-			Vector2 offset = MathUtilities.getPointOnCircle (angle, Random.Range(9.5f, 13f));
-			t.position = new Vector3 (t.position.x + offset.x, 
-				t.position.y + offset.y, t.position.z);			
+			Vector3 flockCenter = 0.75f * new Vector3 (Random.Range (minX, maxX), Random.Range (minY, maxY), 0);
+			 
+			// Spread the pirates in a ring around the center of the flock
+			for (int i = 0; i < flock.Length; i++) {
+				flock [i] = Instantiate (prototypePirate);
+				Transform t = flock [i].transform;
+				t.position = flockCenter;			
+				float angle = (360f / flock.Length) * i;
+				Vector2 offset = MathUtilities.getPointOnCircle (angle, Random.Range (3.5f, 13f));
+				t.position = new Vector3 (t.position.x + offset.x, 
+					t.position.y + offset.y, t.position.z);			
+			}
 		}
 	}
 
@@ -219,19 +225,17 @@ public class SurvivalModeMain : MonoBehaviour
 		// No need to adjust velocity every frame. 
 		if(Time.frameCount % 10 != 0) return;
 
-		foreach (GameObject p in pirates)
-		{
-			Rigidbody2D r = p.transform.GetComponent<Rigidbody2D> ();
+		for (int f = 0; f < numberOfPirateFlocks; f++) {			
+			GameObject[] pirateFlock = pirateFlocks [f];
+			foreach (GameObject p in pirateFlock)
+			{
+				Rigidbody2D r = p.transform.GetComponent<Rigidbody2D> ();
 
-			Vector2 v = new Vector2 ();
+				Vector2 v = new Vector2 ();
 
-			bool piratesStopChase = false; // Can use this to have stop/start chasing logic
-			if (piratesStopChase) {
-				r.velocity = v;
-			} else {				
-				v += 0.3f*boidsAttractionToFlockCenter (p);
-				v += 5.4f * boidsDistancingFromOtherBoids(p);
-				v += 0.4f * boidsVelocityMatchingWithOtherBoids (p);
+				v += 0.3f*boidsAttractionToFlockCenter (p, pirateFlock);
+				v += 5.4f * boidsDistancingFromOtherBoids(p, pirateFlock);
+				v += 0.4f * boidsVelocityMatchingWithOtherBoids (p, pirateFlock);
 
 				Vector2 towardsAlice = (Vector2)aliceShip.transform.position - (Vector2)p.transform.position;
 
@@ -262,24 +266,24 @@ public class SurvivalModeMain : MonoBehaviour
 		}		
 	}
 
-	private Vector2 boidsAttractionToFlockCenter(GameObject thisPirate)
+	private Vector2 boidsAttractionToFlockCenter(GameObject thisPirate, GameObject[] pirateFlock)
 	{
 		Vector2 flockCenter = new Vector2();
-		foreach (GameObject otherPirate in pirates) {
+		foreach (GameObject otherPirate in pirateFlock) {
 			if (thisPirate != otherPirate) {
 				flockCenter += (Vector2) otherPirate.transform.position;
 			}
 		}
-		flockCenter /= (pirates.Length-1);
+		flockCenter /= (pirateFlock.Length-1);
 
 		return flockCenter - (Vector2) thisPirate.transform.position;
 	}
 
-	private Vector2 boidsDistancingFromOtherBoids(GameObject thisPirate)
+	private Vector2 boidsDistancingFromOtherBoids(GameObject thisPirate, GameObject[] pirateFlock)
 	{
 		Vector2 c = new Vector2();
 
-		foreach (GameObject otherPirate in pirates) {
+		foreach (GameObject otherPirate in pirateFlock) {
 			if (thisPirate != otherPirate) {
 				Vector2 otherPiratePos = (Vector2) otherPirate.transform.position;
 				Vector2 thisPiratePos = (Vector2)thisPirate.transform.position;
@@ -293,17 +297,17 @@ public class SurvivalModeMain : MonoBehaviour
 		return c;
 	}
 
-	private Vector2 boidsVelocityMatchingWithOtherBoids(GameObject thisPirate)
+	private Vector2 boidsVelocityMatchingWithOtherBoids(GameObject thisPirate, GameObject[] pirateFlock)
 	{
 		Vector2 flockVelocity = new Vector2();
 
-		foreach (GameObject otherPirate in pirates) {
+		foreach (GameObject otherPirate in pirateFlock) {
 			if (thisPirate != otherPirate) {
 				flockVelocity += otherPirate.GetComponent<Rigidbody2D>().velocity; 
 			}
 		}
 
-		flockVelocity /= (pirates.Length-1);
+		flockVelocity /= (pirateFlock.Length-1);
 
 		return flockVelocity - thisPirate.GetComponent<Rigidbody2D>().velocity;
 	}
