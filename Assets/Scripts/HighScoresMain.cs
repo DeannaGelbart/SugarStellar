@@ -52,6 +52,10 @@ public class HighScoresMain : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			SceneManager.LoadScene ("Beginning"); 
 		} 
+
+		if (Input.GetKey ("escape")) {
+			Application.Quit ();
+		}
 	}
 
 

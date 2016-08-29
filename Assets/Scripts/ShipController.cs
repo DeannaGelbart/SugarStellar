@@ -51,5 +51,14 @@ public class ShipController : MonoBehaviour
 			explosionNoise.Play ();
 			spaceflightMain.playerGotHit ();
 		}
+			
+		// In survival mode, can't let the player cheat by going outside the walls, so bounce them
+		// back in. 
+		if (other.gameObject.tag == "wallSurvivalMode") {
+			Debug.Log ("Wall bounce");
+			Rigidbody2D rb = GetComponent<Rigidbody2D> ();
+			rb.velocity = -1 * rb.velocity;
+		}
+			
 	}
 }
