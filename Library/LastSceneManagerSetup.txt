@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Survival.unity
+- path: Assets/Spaceflight Back.unity
   isLoaded: 1
   isActive: 1

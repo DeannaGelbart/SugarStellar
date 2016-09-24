@@ -11,8 +11,8 @@ public class SurvivalModeMain : MonoBehaviour
 	public GameObject[] prototypeAsteroids;
 	public GameObject prototypePirate;
 	public int numberOfAsteroidsBeforeDifficultyModifier;
-	public int numberOfPiratesBeforeDifficultyModifier;
-	public int numberOfPiratesPerFlock;
+	public int numberOfPiratesPerFlockBeforeDifficultyModifier;
+	public int numberOfPirateFlocks;
 	public GameObject prototypeStar;
 	public int numberOfStars;
 	public GameObject aliceShip;
@@ -30,13 +30,14 @@ public class SurvivalModeMain : MonoBehaviour
 	private float minX;
 	private float maxY;
 	private float minY;
-	private int numberOfPirateFlocks;
 
 	private GameObject[][] pirateFlocks;
-	private int difficulty = 2;
+	private int difficulty = 5;
 	private int timeToFinishThisLevel = 0;
 	private PersistentValue timeTakenHolder;
-	private bool reachedStoppingPoint = false;
+	private bool reachedStoppingPoint = false; 
+	private float maxPirateSpeed;
+	private bool startChase = false;
 
 
 	void Start ()
@@ -58,14 +59,28 @@ public class SurvivalModeMain : MonoBehaviour
 		maxY = topWall.transform.position.y;
 		minY = bottomWall.transform.position.y; 
 
+		maxPirateSpeed = 1.7f + (difficulty-1)/3; 
+		if (difficulty == 3)
+			maxPirateSpeed += 1f;
+		if (difficulty == 4)
+			maxPirateSpeed += 1f;
+		if (difficulty == 5)
+			maxPirateSpeed += 1f;
+
 		initializeAsteroids ();
 		initializeStars ();
 		initializePirates ();
-	}
+
+			}
 
 
 	void FixedUpdate ()
 	{
+		// Once the player ship has moved, the pirates start chasing
+		if (!startChase)
+			if (aliceShip.transform.GetComponent<Rigidbody2D> ().velocity.magnitude > 0f)
+				startChase = true;
+
 		pirateMovements ();
 	}
 
@@ -80,6 +95,8 @@ public class SurvivalModeMain : MonoBehaviour
 			SceneManager.LoadScene ("Insert Coin"); 
 		}
 
+
+		headsUpDisplay.text = "SURVIVED FOR " + Time.timeSinceLevelLoad.ToString("F1") + " SECONDS\nPIRATE SPEED BOOST:" + pirateSpeedBoost() .ToString ("F1");
 	}
 
 	public void playerGotHit ()
@@ -140,9 +157,9 @@ public class SurvivalModeMain : MonoBehaviour
 		else if (difficulty == 2)
 			modifier = 0.75f;
 		else if (difficulty == 4)
-			modifier = 1.25f;
+			modifier = 1.1f;
 		else if (difficulty == 5)
-			modifier = 1.4f;
+			modifier = 1.2f;
 
 		int numberOfAsteroids = (int)(numberOfAsteroidsBeforeDifficultyModifier * modifier);
 		GameObject[] asteroids = new GameObject[numberOfAsteroids];
@@ -185,27 +202,40 @@ public class SurvivalModeMain : MonoBehaviour
 		else if (difficulty == 5)
 			modifier = 1.4f;
 
-		int numberOfPirates = (int)(numberOfPiratesBeforeDifficultyModifier * modifier);
-		numberOfPirateFlocks = numberOfPirates / numberOfPiratesPerFlock;
+	
+		int numberOfPiratesPerFlock = (int)(numberOfPiratesPerFlockBeforeDifficultyModifier * modifier);
+		Debug.Log (numberOfPiratesPerFlock + " pirates per flock over " + numberOfPirateFlocks + " flocks");
 
 		pirateFlocks = new GameObject[numberOfPirateFlocks][];
 		for (int f = 0; f < numberOfPirateFlocks; f++) {			
 			GameObject[] flock = new GameObject[numberOfPiratesPerFlock];
 			pirateFlocks [f] = flock;
-
-			Vector3 flockCenter = 0.75f * new Vector3 (Random.Range (minX, maxX), Random.Range (minY, maxY), 0);
-			 
-			// Spread the pirates in a ring around the center of the flock
+					
 			for (int i = 0; i < flock.Length; i++) {
 				flock [i] = Instantiate (prototypePirate);
+
 				Transform t = flock [i].transform;
-				t.position = flockCenter;			
+				t.position = aliceShip.transform.position;			
 				float angle = (360f / flock.Length) * i;
-				Vector2 offset = MathUtilities.getPointOnCircle (angle, Random.Range (3.5f, 13f));
+				Vector2 offset = MathUtilities.getPointOnCircle (angle, Random.Range(12.5f, 20f));
 				t.position = new Vector3 (t.position.x + offset.x, 
-					t.position.y + offset.y, t.position.z);			
+					t.position.y + offset.y, t.position.z);
 			}
+			 
 		}
+	}
+
+	private float pirateSpeedBoost() 
+	{
+
+
+
+		float boost = Time.timeSinceLevelLoad / 4f;
+		if (boost > 5f)
+			boost = 5f;
+
+		//return boost;
+		return 0f; 
 	}
 
 	// The pirates chase Alice. Their movement code, below, is closely based on the 
@@ -214,16 +244,14 @@ public class SurvivalModeMain : MonoBehaviour
 	// Basically, any bugs and hackiness are my fault but all good ideas came from those two links. 
 	private void pirateMovements() 
 	{
-		float maxSpeed = 1.7f + (difficulty-1)/3; 
-		if (difficulty == 3)
-			maxSpeed += 1f;
-		if (difficulty == 4)
-			maxSpeed += 2f;
-		if (difficulty == 5)
-			maxSpeed += 3f;
-	
+
+		if (!startChase)
+			return;
+
 		// No need to adjust velocity every frame. 
 		if(Time.frameCount % 10 != 0) return;
+
+		float maxSpeed = maxPirateSpeed + pirateSpeedBoost (); 
 
 		for (int f = 0; f < numberOfPirateFlocks; f++) {			
 			GameObject[] pirateFlock = pirateFlocks [f];
@@ -234,32 +262,37 @@ public class SurvivalModeMain : MonoBehaviour
 				Vector2 v = new Vector2 ();
 
 				v += 0.3f*boidsAttractionToFlockCenter (p, pirateFlock);
-				v += 5.4f * boidsDistancingFromOtherBoids(p, pirateFlock);
-				v += 0.4f * boidsVelocityMatchingWithOtherBoids (p, pirateFlock);
+				v += 5.9f * boidsDistancingFromOtherBoids(p, pirateFlock);
+				v += 0.3f * boidsVelocityMatchingWithOtherBoids (p, pirateFlock);
 
 				Vector2 towardsAlice = (Vector2)aliceShip.transform.position - (Vector2)p.transform.position;
+				towardsAlice.Normalize (); // CHANGE: Pirates in survival start further away from Alice than in story mode, so normalize this vector.
 
 				// This is the part that makes the pirates chase her.
-				float chaseFactor = ((difficulty / 5.5f) + 2.4f);
+				float chaseFactor = ((difficulty / 5.5f) + 11.4f);
 				if (difficulty >= 3) {
-					chaseFactor += difficulty / 3.5f;
+					chaseFactor += difficulty / 6.5f;
 				}
 				float d = Vector3.Distance (aliceShip.transform.position, p.transform.position);
-				if (d > 10) {				
-					//Debug.Log ("Adding catchup boost since distance from pirate to alice = " + d);
+				if (d > 10 && Time.timeSinceLevelLoad > 5f) {				
+					Debug.Log ("Adding catchup boost since distance from pirate to alice = " + d);
 					chaseFactor += 1.5f;
 					if (difficulty >= 3)
-						chaseFactor += difficulty/2f;
+						chaseFactor += difficulty/5f;
 				}
 				v += chaseFactor * towardsAlice;				
 
 				Vector2 randomization = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-				v += 0.5f * randomization;
+				v += 0.2f * randomization;
 
-				r.velocity = r.velocity + v * Time.deltaTime;
+				// CHANGE: this was
+				//r.velocity = r.velocity + v * Time.deltaTime;
+				float smoothingAlpha = 0.1f;
+				r.velocity = (1f - smoothingAlpha) * r.velocity + smoothingAlpha * v;
+
 				float speed = r.velocity.magnitude;
 				if (speed > maxSpeed) {
-					//Debug.Log ("Speedlimiting " + speed + " to " + maxSpeed); 
+					Debug.Log ("Speedlimiting " + speed + " to " + maxSpeed); 
 					r.velocity = maxSpeed * r.velocity.normalized;
 				}
 			}
