@@ -4,10 +4,13 @@ SugarStellar.zip
 *Windows.exe
 *Windows.zip
 *Windows_Data
+Assets/Paroxe
+Assets/Paroxe/UltimateBloom/*
 SugarStellar_Data
 *.app
 *.otf
 UnityLockFile
+Library/*
 259285__philip-daniels__launch.*
 *AudioMicro*
 *zimbot*
