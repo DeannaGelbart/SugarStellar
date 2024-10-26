@@ -2,19 +2,21 @@ SugarStellar is a short game with gameplay and visuals inspired by the [bygone e
 
 You can play it in your browser at [https://sugarstellar.itch.io/sugarstellar](https://sugartronics.itch.io/sugarstellar)
 
-You can also watch gameplay at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840
+You can also watch gameplay at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840 
 
-#Repo
+Unity development & original script by Deanna Gelbart, puns by Anna, music by Scott Smigiel, art by a special guest assisted by Deanna. 
+
+# Repo
 
 This repo contains the Unity project for the game:
 - C# source code is in Assets/Scripts
 - Art is in Assets/Art
 - Music is in Assets/Audio
 
-#Licensing
+# Licensing
 
-Creative Commons Attribution License. 
-Code by Deanna Gelbart, music by Scott Smigiel, music & art by the SugarStellar team. 
+Our work is under a Creative Commons Attribution License.
+
 The arcade cabinet photo (before we modified it) is [by Chris Rand](https://commons.wikimedia.org/wiki/File:Signed_Pong_Cabinet.jpg). 
 
 The itch.io builds of the game include this art and audio:
