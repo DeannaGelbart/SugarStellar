@@ -1,8 +1,8 @@
 SugarStellar is a short game with gameplay and visuals inspired by old vector graphics arcade game, especially Asteroids.
 
-![IMG_6089](https://github.com/user-attachments/assets/855b07a1-49a2-411a-ae2a-118a8ee85731)
 ![IMG_6088](https://github.com/user-attachments/assets/e02ff7b0-9ecc-4451-8a82-2bf375cceb81)
 ![IMG_6087](https://github.com/user-attachments/assets/c3faec37-3650-423c-8505-0a658a60ed36)
+![IMG_6089](https://github.com/user-attachments/assets/855b07a1-49a2-411a-ae2a-118a8ee85731)
 
 You can watch gameplay here: https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840 
 
