@@ -2,7 +2,7 @@ SugarStellar is a short game with gameplay and visuals inspired by the [bygone e
 
 You can  watch gameplay here: https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840 
 
-Unity development & original script by Deanna Gelbart, puns by Anna, music by Scott Smigiel, art by a special guest assisted by Deanna. 
+Game by by Deanna (code, original script, bad art) / Oth (good art) / Anna (adding puns) / Scott Smigiel (music).
 
 # Repo
 
