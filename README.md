@@ -1,8 +1,6 @@
 SugarStellar is a short game with gameplay and visuals inspired by the [bygone era of vector arcade games](http://www.museumofplay.org/blog/chegheads/2011/08/gone-but-not-forgotten-vector-games/), especially Asteroids.<img width="503" alt="Screen Shot 2024-10-25 at 5 59 02 PM" src="https://github.com/user-attachments/assets/70bad1e2-1500-4fc2-a684-6369c78410dd">
 
-You can play it in your browser at [https://sugarstellar.itch.io/sugarstellar](https://sugartronics.itch.io/sugarstellar)
-
-You can also watch gameplay at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840 
+You can  watch gameplay here: https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840 
 
 Unity development & original script by Deanna Gelbart, puns by Anna, music by Scott Smigiel, art by a special guest assisted by Deanna. 
 
