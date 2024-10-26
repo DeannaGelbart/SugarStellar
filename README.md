@@ -6,7 +6,7 @@ SugarStellar is a short game with gameplay and visuals inspired by old vector gr
 
 You can watch gameplay here: https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840 
 
-If you want to play, you can play in your browser on Itch.io.  I'm not going to link that directly here because one of our projects has a somewhat spicy name.
+You can [play in your browser on Itch.io](https://sugartronics.itch.io/sugarstellar)! 
 
 Game by by Deanna (code, original script, bad art), Oth (good art), Anna (adding puns), Scott Smigiel (music).
 
