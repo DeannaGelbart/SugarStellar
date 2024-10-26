@@ -4,9 +4,11 @@ OK, I'll level with you: it's not an emulator and the game did not actually exis
 
 This short game has gameplay and visuals inspired by the [bygone era of vector arcade games](http://www.museumofplay.org/blog/chegheads/2011/08/gone-but-not-forgotten-vector-games/), especially Asteroids.
 
-You can play it in your browser at https://sugarstellar.itch.io/sugarstellar
+You can play it in your browser at [https://sugarstellar.itch.io/sugarstellar](https://sugartronics.itch.io/sugarstellar)
 
-You can also watch some gameplay at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840
+You can also watch gameplay at https://www.youtube.com/watch?v=WYz5-mXopbM&feature=youtu.be&t=840
+
+#Repo
 
 This repo contains the Unity project for the game:
 - C# source code is in Assets/Scripts
